@@ -4,6 +4,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 from kafka import KafkaProducer
 import json
 import logging
+import os
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
@@ -11,9 +12,12 @@ metrics = PrometheusMetrics(app)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'kafka:9092')
+
+
 # Kafka producer setup
 producer = KafkaProducer(
-    bootstrap_servers='host.docker.internal:9092',  # use container hostname kafka, or localhost if running locally
+    bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,  # use container hostname kafka, or localhost if running locally
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 

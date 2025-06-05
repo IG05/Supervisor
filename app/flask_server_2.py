@@ -6,6 +6,10 @@ import json
 import threading
 import logging
 from tasks import add  # import celery task
+import os
+
+KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'kafka:9092')
+
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
@@ -16,7 +20,7 @@ logger = logging.getLogger(__name__)
 # Kafka consumer setup
 consumer = KafkaConsumer(
     'test_topic',
-    bootstrap_servers='host.docker.internal:9092',
+    bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
     auto_offset_reset='earliest',
     group_id='flask_server_2_group',
     value_deserializer=lambda m: json.loads(m.decode('utf-8'))

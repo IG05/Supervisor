@@ -1,11 +1,15 @@
 #tasks
 from celery import Celery
 import logging
+import os
+
+REDIS_URL = os.getenv('REDIS_URL', 'redis://redis:6379/0')
+
 
 celery = Celery(
     'tasks',
-    broker='redis://host.docker.internal:6379/0',
-    backend='redis://host.docker.internal:6379/0'
+    broker=REDIS_URL,
+    backend=REDIS_URL
 )
 
 logging.basicConfig(level=logging.INFO)
