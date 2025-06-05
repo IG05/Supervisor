@@ -28,7 +28,9 @@ def produce():
         "message": request.args.get('message', 'Hello Kafka!'),
         "id": request.args.get('id', '0')
     }
+    logger.info("About to send message to Kafka")
     producer.send('test_topic', value=data)
+    logger.info("Sent message to Kafka, about to flush")
     producer.flush()
     logger.info(f"Produced message: {data}")
     return f"Message sent to Kafka: {data}"
