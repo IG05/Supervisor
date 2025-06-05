@@ -12,6 +12,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose Flask port
 EXPOSE 6200
-
+EXPOSE 6201
 # Start Supervisor to run both flask and celery
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

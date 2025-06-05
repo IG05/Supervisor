@@ -1,7 +1,12 @@
-from __init__ import make_celery
+#tasks
+from celery import Celery
 import logging
 
-celery = make_celery()
+celery = Celery(
+    'tasks',
+    broker='redis://host.docker.internal:6379/0',
+    backend='redis://host.docker.internal:6379/0'
+)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

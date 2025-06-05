@@ -1,4 +1,6 @@
+#requirements
 flask
 celery
 redis
 prometheus-flask-exporter
+kafka-python
